@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource(value = {"classpath:persistence/database.properties", "classpath:persistence/hibernate.properties"})
 @ComponentScan("fr.cances.steve.annuaire.spring")
 @EnableTransactionManagement
-public class PersitenceConfig { //implements TransactionManagementConfigurer {
+public class PersitenceConfig {
 
 	public static final String PERSITENCE_UNIT_NAME = "productionPersistenceUnit";
 
@@ -70,9 +70,6 @@ public class PersitenceConfig { //implements TransactionManagementConfigurer {
 	public JpaTransactionManager transactionManager() {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(this.entityManagerFactory().getObject());
-		// TODO vérifier doublon ?
-		transactionManager.setDataSource(this.dataSource());
-
 		return transactionManager;
 	}
 

@@ -32,9 +32,7 @@ public class TestPersistenceConfig {
 
 	public static final String PERSITENCE_UNIT_NAME = "testPersistenceUnit";
 
-	public static final String ENTITYMANAGER_PACKAGE_TO_SCAN = "fr.cances.steve.annuaire.spring";
-	// TODO verifier
-	//public static final String ENTITYMANAGER_PACKAGE_TO_SCAN = "fr.cances.steve.annuaire.spring.model.persistence.entities";
+	public static final String ENTITYMANAGER_PACKAGE_TO_SCAN = "fr.cances.steve.annuaire.spring.model.persistence.entities";
 
 	private static final String DATABASE_DRIVER = "org.hsqldb.jdbcDriver";
 	private static final String DATABASE_URL = "jdbc:hsqldb:mem:testdb";
@@ -68,12 +66,8 @@ public class TestPersistenceConfig {
 		entityManagerFactoryBean.setDataSource(this.dataSource());
 		entityManagerFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGE_TO_SCAN);
 		entityManagerFactoryBean.setJpaProperties(jpaHibernateProperties());
-
-		//TODO vérifier utilité
 		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
 		entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
-		entityManagerFactoryBean.afterPropertiesSet();
-
 		return entityManagerFactoryBean;
 
 	}
