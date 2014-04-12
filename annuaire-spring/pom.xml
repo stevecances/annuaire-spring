@@ -28,7 +28,7 @@
 	<modules>
 		<module>annuaire-spring-model-api</module>
 		<module>annuaire-spring-model-impl</module>
-		<module>annuaire-spring-web</module>
+		<module>annuaire-spring-ws</module>
 	</modules>
 
 	<build>

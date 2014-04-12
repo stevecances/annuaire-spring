@@ -1,4 +1,4 @@
-package fr.cances.steve.annuaire.spring.web.controller;
+package fr.cances.steve.annuaire.spring.ws.controller;
 
 import java.util.Collection;
 
