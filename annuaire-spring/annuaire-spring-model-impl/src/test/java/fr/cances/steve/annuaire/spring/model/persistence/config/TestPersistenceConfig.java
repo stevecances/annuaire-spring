@@ -66,10 +66,8 @@ public class TestPersistenceConfig {
 		entityManagerFactoryBean.setDataSource(this.dataSource());
 		entityManagerFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGE_TO_SCAN);
 		entityManagerFactoryBean.setJpaProperties(jpaHibernateProperties());
-		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-		entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
+		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		return entityManagerFactoryBean;
-
 	}
 
 	@Bean

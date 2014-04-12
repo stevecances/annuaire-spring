@@ -16,10 +16,10 @@
 		<jre.target.version>1.7</jre.target.version>
 
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<maven.war.plugin.version>2.4</maven.war.plugin.version>
 
-		<javaee.version>6.0</javaee.version>
-		<hibernate.jpa.version>1.0.1.Final</hibernate.jpa.version>
 		<hibernate.version>4.3.4.Final</hibernate.version>
+		<hibernate.validator.version>5.1.0.Final</hibernate.validator.version>
 		<spring.version>4.0.3.RELEASE</spring.version>
 		<jackson2.version>2.3.2</jackson2.version>
 
@@ -47,7 +47,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- MySQL -->
+			<!-- MySQL connector -->
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
@@ -70,7 +70,7 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>5.1.0.Final</version>
+				<version>${hibernate.validator.version}</version>
 			</dependency>
 			<!-- Spring framework -->
 			<dependency>
