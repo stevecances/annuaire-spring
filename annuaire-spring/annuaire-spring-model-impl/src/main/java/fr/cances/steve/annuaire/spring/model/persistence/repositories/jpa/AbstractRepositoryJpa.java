@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -14,18 +15,21 @@ import fr.cances.steve.annuaire.spring.model.persistence.repositories.AbstractRe
 /**
  *
  * @author Steve Cancès <steve.cances@gmail.com>
- * @param <E> L'entity géré par la dao
+ * @param <E> L'entity géré par le dao
  */
 @Transactional
 public abstract class AbstractRepositoryJpa<E, I> implements AbstractRepository<E, I> {
 
 	/**
-	 * Entity Manager used to talk with the database
+	 * L'Entity Manager qui gère la base de données
 	 */
 	@PersistenceContext
 	protected EntityManager entityManager;
 
-	private final Class<E> domainClass;
+	/**
+	 * La classe de l'entity gérée par le dao
+	 */
+	protected final Class<E> domainClass;
 
 	public AbstractRepositoryJpa(Class<E> entityClass) {
 		this.domainClass = entityClass;
@@ -45,42 +49,41 @@ public abstract class AbstractRepositoryJpa<E, I> implements AbstractRepository<
 
 	@Override
 	public void remove(E entity) {
-		this.entityManager.remove(entityManager.merge(entity));
+		this.entityManager.remove(this.entityManager.merge(entity));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public E find(I id) {
-		return entityManager.find(domainClass, id);
+		return this.entityManager.find(this.domainClass, id);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<E> findAll() {
-		CriteriaQuery<E> criteria = entityManager.getCriteriaBuilder().createQuery(domainClass);
-		criteria.select(criteria.from(domainClass));
-		return entityManager.createQuery(criteria).getResultList();
+		CriteriaQuery<E> criteria = this.entityManager.getCriteriaBuilder().createQuery(this.domainClass);
+		criteria.select(criteria.from(this.domainClass));
+		return this.entityManager.createQuery(criteria).getResultList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<E> findRange(int[] range) {
-		CriteriaQuery<E> cq = entityManager.getCriteriaBuilder().createQuery(domainClass);
-		cq.select(cq.from(domainClass));
-		javax.persistence.Query q = entityManager.createQuery(cq);
-		q.setMaxResults(range[1] - range[0]);
-		q.setFirstResult(range[0]);
-		return q.getResultList();
+		CriteriaQuery<E> criteriaQuery = this.entityManager.getCriteriaBuilder().createQuery(this.domainClass);
+		criteriaQuery.select(criteriaQuery.from(domainClass));
+		TypedQuery<E> query = this.entityManager.createQuery(criteriaQuery);
+		query.setMaxResults(range[1] - range[0]);
+		query.setFirstResult(range[0]);
+		return query.getResultList();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public int count() {
-		CriteriaBuilder b = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Long> criteria = b.createQuery(Long.class);
-		criteria.select(b.count(criteria.from(domainClass)));
-
-		return entityManager.createQuery(criteria).getSingleResult().intValue();
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
+		criteria.select(criteriaBuilder.count(criteria.from(this.domainClass)));
+		return this.entityManager.createQuery(criteria).getSingleResult().intValue();
 	}
 
 }

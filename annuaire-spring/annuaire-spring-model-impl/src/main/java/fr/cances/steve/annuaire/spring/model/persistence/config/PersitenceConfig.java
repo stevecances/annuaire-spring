@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class PersitenceConfig { //implements TransactionManagementConfigurer {
 
-	//public static final String A = "persistenceUnit";
+	public static final String PERSITENCE_UNIT_NAME = "productionPersistenceUnit";
 
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
 	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
@@ -47,17 +47,6 @@ public class PersitenceConfig { //implements TransactionManagementConfigurer {
 		return dataSource;
 	}
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-		//entityManagerFactoryBean.setPersistenceUnitName(A);
-		entityManagerFactoryBean.setDataSource(dataSource());
-		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-		entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN));
-		entityManagerFactoryBean.setJpaProperties(jpaHibernateProperties());
-		return entityManagerFactoryBean;
-	}
-
 	private Properties jpaHibernateProperties() {
 		Properties properties = new Properties();
 		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT,	env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
@@ -67,18 +56,24 @@ public class PersitenceConfig { //implements TransactionManagementConfigurer {
 	}
 
 	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		entityManagerFactoryBean.setPersistenceUnitName(PERSITENCE_UNIT_NAME);
+		entityManagerFactoryBean.setDataSource(this.dataSource());
+		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+		entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN));
+		entityManagerFactoryBean.setJpaProperties(this.jpaHibernateProperties());
+		return entityManagerFactoryBean;
+	}
+
+	@Bean
 	public JpaTransactionManager transactionManager() {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		//transactionManager.setPersistenceUnitName(A);
-		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+		transactionManager.setEntityManagerFactory(this.entityManagerFactory().getObject());
+		// TODO vérifier doublon ?
 		transactionManager.setDataSource(this.dataSource());
 
 		return transactionManager;
 	}
-
-	//	@Override
-	//	public PlatformTransactionManager annotationDrivenTransactionManager() {
-	//		return transactionManager();
-	//	}
 
 }

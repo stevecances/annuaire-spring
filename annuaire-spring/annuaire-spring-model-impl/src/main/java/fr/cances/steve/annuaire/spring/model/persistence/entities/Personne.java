@@ -1,8 +1,10 @@
 package fr.cances.steve.annuaire.spring.model.persistence.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,12 +18,18 @@ public class Personne {
 	@GeneratedValue
 	private Long id;
 	
+	@Column(nullable = false)
 	private String nom;
 	
+	@Column(nullable = false)
 	private String prenom;
 	
 	@OneToMany(mappedBy = "personne", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private Collection<Telephone> telephones;
+	
+	public Personne() {
+		this.telephones = new ArrayList<>();
+	}
 
 	public Long getId() {
 		return id;
