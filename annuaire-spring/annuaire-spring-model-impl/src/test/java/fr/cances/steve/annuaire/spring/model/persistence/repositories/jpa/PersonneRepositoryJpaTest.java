@@ -5,6 +5,9 @@ package fr.cances.steve.annuaire.spring.model.persistence.repositories.jpa;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import fr.cances.steve.annuaire.spring.model.persistence.config.TestPersistenceConfig;
 import fr.cances.steve.annuaire.spring.model.persistence.entities.Personne;
+import fr.cances.steve.annuaire.spring.model.persistence.entities.Telephone;
 import fr.cances.steve.annuaire.spring.model.persistence.repositories.PersonneRepository;
 
 /**
@@ -53,6 +57,24 @@ public class PersonneRepositoryJpaTest extends AbstractRepositoryJpaTest {
 		personne.setNom(null);
 		this.personneRepository.create(personne);
 		assertEquals(0, this.personneRepository.count());
+	}
+	
+	@Test
+	public void testCreate3() {
+		assertEquals(0, this.personneRepository.count());
+		Personne personne = new Personne();
+		personne.setPrenom("Steve");
+		personne.setNom("Cancès");
+		Collection<Telephone> telephones = new ArrayList<>();
+		personne.setTelephones(telephones);
+		Telephone telephone = new Telephone();
+		telephones.add(telephone);
+		telephone.setPersonne(personne);
+		telephone.setTelephone("0000000000");
+		this.personneRepository.create(personne);
+		assertEquals(1, this.personneRepository.count());
+		personne = this.personneRepository.find(personne.getId());
+		assertEquals(1, personne.getTelephones().size());
 	}
 
 }

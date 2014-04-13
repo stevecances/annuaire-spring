@@ -3,8 +3,8 @@ package fr.cances.steve.annuaire.spring.model.service.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +12,7 @@ import fr.cances.steve.annuaire.spring.model.persistence.entities.Personne;
 import fr.cances.steve.annuaire.spring.model.persistence.repositories.PersonneRepository;
 import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaire;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
+import fr.cances.steve.annuaire.spring.model.service.impl.mapping.BeanMapper;
 
 /**
  *  Services annuaire (consultation uniquement)
@@ -32,16 +33,17 @@ public class ServiceAnnuaireImpl implements ServiceAnnuaire {
 	PersonneRepository personneRepository;
 
 	/**
-	 * Dozer bean mapper
+	 * Bean mapper
 	 */
 	@Autowired
-	DozerBeanMapper dozerMapper;
+	@Qualifier("HandyBeanMapper")
+	BeanMapper beanMapper;
 
 	@Override
 	public Collection<PersonneVo> getAllPersonnes() {
 		Collection<PersonneVo> personnesVo = new ArrayList<>();
 		for(Personne personne : this.personneRepository.findAll()) {
-			personnesVo.add(this.dozerMapper.map(personne, PersonneVo.class));
+			personnesVo.add(this.beanMapper.personneToPersonneVo(personne));
 		}
 
 		return personnesVo;
@@ -52,7 +54,7 @@ public class ServiceAnnuaireImpl implements ServiceAnnuaire {
 		PersonneVo personneVo = null;
 		Personne personne = this.personneRepository.find(idPersonne);
 		if(personne != null) {
-			personneVo = this.dozerMapper.map(personne, PersonneVo.class);
+			personneVo = this.beanMapper.personneToPersonneVo(personne);
 		}
 		return personneVo;
 	}
@@ -61,7 +63,7 @@ public class ServiceAnnuaireImpl implements ServiceAnnuaire {
 	public Collection<PersonneVo> findPersonnesLikePrenomOrNom(String like) {
 		Collection<PersonneVo> personnesVo = new ArrayList<>();
 		for(Personne personne : this.personneRepository.findPersonnesLikePrenomOrNom(like)) {
-			personnesVo.add(this.dozerMapper.map(personne, PersonneVo.class));
+			personnesVo.add(this.beanMapper.personneToPersonneVo(personne));
 		}
 		return personnesVo;
 	}

@@ -16,7 +16,7 @@ public class Telephone {
 	@Column(nullable = false)
 	private String telephone;
 	
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Personne personne;
 
 	public Long getId() {
@@ -33,5 +33,13 @@ public class Telephone {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public Personne getPersonne() {
+		return personne;
+	}
+
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
 	}
 }
