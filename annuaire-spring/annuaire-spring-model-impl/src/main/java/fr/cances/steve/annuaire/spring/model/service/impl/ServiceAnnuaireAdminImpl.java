@@ -44,7 +44,7 @@ public class ServiceAnnuaireAdminImpl implements ServiceAnnuaireAdmin {
 		if(personneVo != null) {
 			personneVo.setId(null);
 			Personne personne = this.beanMapper.personneVoToPersonne(personneVo);
-			this.personneRepository.create(personne);
+			personne = this.personneRepository.create(personne);
 			personneVo = this.beanMapper.personneToPersonneVo(personne);
 		}
 		return personneVo;
@@ -55,7 +55,7 @@ public class ServiceAnnuaireAdminImpl implements ServiceAnnuaireAdmin {
 		if(idPersonne != null && personneVo != null) {
 			personneVo.setId(idPersonne);
 			Personne personne = this.beanMapper.personneVoToPersonne(personneVo);
-			this.personneRepository.edit(personne);
+			personne = this.personneRepository.edit(personne);
 			personneVo = this.beanMapper.personneToPersonneVo(personne);
 		}
 		return personneVo;

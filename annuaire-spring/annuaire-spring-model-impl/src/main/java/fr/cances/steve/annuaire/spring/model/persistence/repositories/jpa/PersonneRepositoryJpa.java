@@ -21,8 +21,8 @@ public class PersonneRepositoryJpa extends AbstractRepositoryJpa<Personne, Long>
 	}
 
 	public Collection<Personne> findPersonnesLikePrenomOrNom(String like) {
-		TypedQuery<Personne> query = this.entityManager.createQuery("From Personne p where i.nom like:like OR i.prenom like:like", this.domainClass);
-		query.setParameter("like", like);
+		TypedQuery<Personne> query = this.entityManager.createQuery("From Personne p where p.nom like:like OR p.prenom like:like", this.domainClass);
+		query.setParameter("like", "%"+like+"%");
 		return query.getResultList();
 	}
 

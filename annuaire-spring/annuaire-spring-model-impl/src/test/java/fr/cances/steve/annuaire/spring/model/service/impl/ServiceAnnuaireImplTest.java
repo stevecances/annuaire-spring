@@ -36,29 +36,20 @@ public class ServiceAnnuaireImplTest extends AbstractRepositoryJpaTest {
 	@Autowired
 	private ServiceAnnuaireAdmin serviceAnnuaireAdmin;
 
-	public static boolean dbInit = false;
-	
-	public static Long idPersonne;
+	public Long idPersonne;
 
 	@Before
 	public void before() {
-		if(!dbInit){
-			
-			this.truncateSchemaPublic();
-			
-			PersonneVo personneVo = new PersonneVo();
-			personneVo.setNom("Cancès");
-			personneVo.setPrenom("Steve");
-			personneVo = this.serviceAnnuaireAdmin.createPersonne(personneVo);
-			idPersonne = personneVo.getId();
-			
-			personneVo = new PersonneVo();
-			personneVo.setNom("Nom");
-			personneVo.setPrenom("Prenom");
-			this.serviceAnnuaireAdmin.createPersonne(personneVo);
-			
-			dbInit = true;
-		}
+		this.truncateSchemaPublic();
+		PersonneVo personneVo = new PersonneVo();
+		personneVo.setNom("Cancès");
+		personneVo.setPrenom("Steve");
+		personneVo = this.serviceAnnuaireAdmin.createPersonne(personneVo);
+		this.idPersonne = personneVo.getId();
+		personneVo = new PersonneVo();
+		personneVo.setNom("Jobs");
+		personneVo.setPrenom("Steve");
+		this.serviceAnnuaireAdmin.createPersonne(personneVo);
 	}
 
 	@Test
@@ -66,11 +57,20 @@ public class ServiceAnnuaireImplTest extends AbstractRepositoryJpaTest {
 		Collection<PersonneVo> personnesVo = this.serviceAnnuaire.getAllPersonnes();
 		assertEquals(2, personnesVo.size());
 	}
-	
+
 	@Test
 	public void testGetPersonne() {
+		assertEquals(2, this.serviceAnnuaire.getAllPersonnes().size());
 		PersonneVo personneVo = this.serviceAnnuaire.getPersonne(idPersonne);
 		assertEquals("Steve", personneVo.getPrenom());
 		assertEquals("Cancès", personneVo.getNom());
+	}
+	
+	@Test
+	public void testFindPersonnesLikePrenomOrNom() {
+		assertEquals(2, this.serviceAnnuaire.findPersonnesLikePrenomOrNom("Steve").size());
+		assertEquals(2, this.serviceAnnuaire.findPersonnesLikePrenomOrNom("eve").size());
+		assertEquals(1, this.serviceAnnuaire.findPersonnesLikePrenomOrNom("Jobs").size());
+		assertEquals(1, this.serviceAnnuaire.findPersonnesLikePrenomOrNom("Jo").size());
 	}
 }
