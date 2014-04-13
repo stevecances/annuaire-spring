@@ -53,10 +53,15 @@ public class ServiceAnnuaireAdminImpl implements ServiceAnnuaireAdmin {
 	@Override
 	public PersonneVo editPersonne(Long idPersonne, PersonneVo personneVo) {
 		if(idPersonne != null && personneVo != null) {
-			personneVo.setId(idPersonne);
-			Personne personne = this.beanMapper.personneVoToPersonne(personneVo);
-			personne = this.personneRepository.edit(personne);
-			personneVo = this.beanMapper.personneToPersonneVo(personne);
+			Personne personne = this.personneRepository.find(idPersonne);
+			if(personne != null) {
+				personneVo.setId(idPersonne);
+				this.beanMapper.updatePersonneFromPersonneVo(personneVo, personne);
+				personne = this.personneRepository.edit(personne);
+				personneVo = this.beanMapper.personneToPersonneVo(personne);
+			} else {
+				personneVo = null;
+			}
 		}
 		return personneVo;
 	}

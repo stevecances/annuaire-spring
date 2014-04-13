@@ -115,5 +115,17 @@ public class ServiceAnnuaireAdminImplTest extends AbstractRepositoryJpaTest {
 			assertEquals("1111111111", telephoneVo.getTelephone());
 		}
 	}
+	
+	@Test
+	public void testEditPersonne3() {
+		PersonneVo personneVo = fakePersonneVo();
+		personneVo = this.serviceAnnuaireAdmin.createPersonne(personneVo);
+		for(TelephoneVo telephoneVo : personneVo.getTelephones()) {
+			assertEquals("0000000000", telephoneVo.getTelephone());
+		}
+		personneVo.getTelephones().clear();
+		personneVo = this.serviceAnnuaireAdmin.editPersonne(personneVo.getId(), personneVo);
+		assertEquals(0, personneVo.getTelephones().size());
+	}
 
 }

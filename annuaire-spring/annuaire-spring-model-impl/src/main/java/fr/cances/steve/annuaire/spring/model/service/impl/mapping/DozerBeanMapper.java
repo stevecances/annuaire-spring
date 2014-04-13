@@ -35,6 +35,12 @@ public class DozerBeanMapper implements BeanMapper {
 	public Telephone telephoneVoToTelephone(TelephoneVo telephoneVo) {
 		return this.dozerMapper.map(telephoneVo, Telephone.class);
 	}
+	
+	@Override
+	public void updateTelephoneFromTelephoneVo(TelephoneVo telephoneVo,
+			Telephone telephone) {
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public PersonneVo personneToPersonneVo(Personne personne) {
@@ -44,6 +50,12 @@ public class DozerBeanMapper implements BeanMapper {
 	@Override
 	public Personne personneVoToPersonne(PersonneVo personneVo) {
 		return this.dozerMapper.map(personneVo, Personne.class);
+	}
+	
+	@Override
+	public void updatePersonneFromPersonneVo(PersonneVo personneVo,
+			Personne personne) {
+		// TODO Auto-generated method stub
 	}
 
 }

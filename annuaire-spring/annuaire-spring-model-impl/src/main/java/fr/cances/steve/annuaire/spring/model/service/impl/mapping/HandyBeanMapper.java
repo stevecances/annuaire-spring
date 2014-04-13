@@ -43,6 +43,14 @@ public class HandyBeanMapper implements BeanMapper {
 		}
 		return telephone;
 	}
+	
+	public void updateTelephoneFromTelephoneVo(TelephoneVo telephoneVo, Telephone telephone) {
+		if(telephoneVo != null && telephone != null) {
+			if(telephoneVo.getTelephone() != null) {
+				telephone.setTelephone(telephone.getTelephone());
+			}
+		}
+	}
 
 	@Override
 	public PersonneVo personneToPersonneVo(Personne personne) {
@@ -86,6 +94,24 @@ public class HandyBeanMapper implements BeanMapper {
 			}
 		}
 		return personne;
+	}
+	
+	public void updatePersonneFromPersonneVo(PersonneVo personneVo, Personne personne) {
+		if(personne != null && personneVo != null) {
+			if(personneVo.getNom() != null) {
+				personne.setNom(personneVo.getNom());
+			}
+			if(personneVo.getPrenom() != null) {
+				personne.setPrenom(personneVo.getPrenom());
+			}
+			if(personneVo.getTelephones() != null) {
+				Collection<Telephone> telephones = personne.getTelephones();
+				telephones.clear();
+				for(TelephoneVo telephoneVo : personneVo.getTelephones()) {
+					telephones.add(this.telephoneVoToTelephone(telephoneVo));
+				}
+			}
+		}
 	}
 
 }
