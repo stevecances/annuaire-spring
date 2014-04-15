@@ -8,5 +8,14 @@
 	</parent>
 	<artifactId>annuaire-spring-model-api</artifactId>
 	<name>annuaire-spring-model-api</name>
-	
+
+	<dependencies>
+
+		<!-- Validation API <dependency> <groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
+			</dependency> -->
+		<!-- Hibernate validator <dependency> <groupId>org.hibernate</groupId> 
+			<artifactId>hibernate-validator</artifactId> </dependency> -->
+
+	</dependencies>
+
 </project>

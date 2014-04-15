@@ -2,20 +2,19 @@ package fr.cances.steve.annuaire.spring.model.service.api.valueobjects;
 
 import java.util.Collection;
 
-
 public class PersonneVo {
 
 	public PersonneVo() {
 
 	}
 
-	private Long id;
+	protected Long id;
+	
+	protected String nom;
+	
+	protected String prenom;
 
-	private String nom;
-
-	private String prenom;
-
-	private Collection<TelephoneVo> telephones;
+	protected Collection<TelephoneVo> telephones;
 
 	public Long getId() {
 		return id;

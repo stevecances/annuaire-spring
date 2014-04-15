@@ -1,4 +1,4 @@
-package fr.cances.steve.annuaire.spring.ws.controller;
+package fr.cances.steve.annuaire.spring.ws.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

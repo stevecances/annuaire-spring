@@ -47,7 +47,7 @@ public class HandyBeanMapper implements BeanMapper {
 	public void updateTelephoneFromTelephoneVo(TelephoneVo telephoneVo, Telephone telephone) {
 		if(telephoneVo != null && telephone != null) {
 			if(telephoneVo.getTelephone() != null) {
-				telephone.setTelephone(telephone.getTelephone());
+				telephone.setTelephone(telephoneVo.getTelephone());
 			}
 		}
 	}

@@ -1,6 +1,8 @@
-package fr.cances.steve.annuaire.spring.ws.controller;
+package fr.cances.steve.annuaire.spring.ws.controllers;
 
 import java.util.Collection;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaire;
 import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaireAdmin;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.TelephoneVo;
+import fr.cances.steve.annuaire.spring.ws.valueobjects.PersonneVoCreate;
+import fr.cances.steve.annuaire.spring.ws.valueobjects.PersonneVoEdit;
 
 /**
  * Controleur Annuaire
@@ -53,6 +58,7 @@ public class ControllerAnnuaireRest {
 	 * @return l'ensemble des personnes de l'annuaire
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
+	@ResponseBody
 	public ResponseEntity<Collection<PersonneVo>> getAllPersonnes() {
 		ResponseEntity<Collection<PersonneVo>> response = new ResponseEntity<>(this.serviceAnnuaire.getAllPersonnes(), HttpStatus.OK);
 		return response;
@@ -68,6 +74,7 @@ public class ControllerAnnuaireRest {
 	 * @return La personne demandée si elle existe (sinon 404)
 	 */
 	@RequestMapping(value = "/{idPersonne}", method = RequestMethod.GET)
+	@ResponseBody
 	public ResponseEntity<PersonneVo> getPersonne(@PathVariable Long idPersonne) {
 		ResponseEntity<PersonneVo> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		PersonneVo personneVo = this.serviceAnnuaire.getPersonne(idPersonne);
@@ -87,6 +94,7 @@ public class ControllerAnnuaireRest {
 	 * @return les telephones de la personne si elle existe (sinon 404)
 	 */
 	@RequestMapping(value = "/{idPersonne}/telephones", method = RequestMethod.GET)
+	@ResponseBody
 	public ResponseEntity<Collection<TelephoneVo>> getTelephonesPersonne(@PathVariable Long idPersonne) {
 		ResponseEntity<Collection<TelephoneVo>> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		PersonneVo personneVo = this.serviceAnnuaire.getPersonne(idPersonne);
@@ -110,7 +118,8 @@ public class ControllerAnnuaireRest {
 	 * @return La personne créée (avec l'id généré)
 	 */
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<PersonneVo> createPersonne(@RequestBody PersonneVo personneVo) {
+	@ResponseBody
+	public ResponseEntity<PersonneVo> createPersonne(@Valid @RequestBody PersonneVoCreate personneVo) {
 		ResponseEntity<PersonneVo> response = new ResponseEntity<>(this.serviceAnnuaireAdmin.createPersonne(personneVo), HttpStatus.CREATED);
 		return response;
 	}
@@ -126,7 +135,8 @@ public class ControllerAnnuaireRest {
 	 * @return La personne éditée 
 	 */
 	@RequestMapping(value = "/{idPersonne}", method = RequestMethod.PUT)
-	public ResponseEntity<PersonneVo> editPersonne(@PathVariable Long idPersonne, @RequestBody PersonneVo personneVo) {
+	@ResponseBody
+	public ResponseEntity<PersonneVo> editPersonne(@PathVariable Long idPersonne,@Valid @RequestBody PersonneVoEdit personneVo) {
 		ResponseEntity<PersonneVo> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		PersonneVo personneVoOld = this.serviceAnnuaire.getPersonne(idPersonne);
 		if(personneVoOld != null) {
@@ -144,6 +154,7 @@ public class ControllerAnnuaireRest {
 	 * @param idPersonne L'id de la personne à supprimer
 	 * @return La reponse (404 si personne non trouvée)
 	 */
+	@RequestMapping(value = "/{idPersonne}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deletePersonne(@PathVariable Long idPersonne) {
 		ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		PersonneVo personneVo = this.serviceAnnuaire.getPersonne(idPersonne);
