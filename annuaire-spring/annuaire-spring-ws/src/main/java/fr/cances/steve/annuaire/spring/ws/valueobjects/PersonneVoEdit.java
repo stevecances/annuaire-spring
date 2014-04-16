@@ -3,9 +3,8 @@
  */
 package fr.cances.steve.annuaire.spring.ws.valueobjects;
 
-import javax.validation.constraints.NotNull;
-
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
+import fr.cances.steve.annuaire.spring.ws.validation.NullOrNotBlank;
 
 /**
  * @author Steve Cancès
@@ -15,9 +14,14 @@ import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo
  */
 public class PersonneVoEdit extends PersonneVo {
 	
-	@NotNull
-	public Long getId() {
-		return id;
+	@NullOrNotBlank
+	public String getNom() {
+		return nom;
+	}
+	
+	@NullOrNotBlank
+	public String getPrenom() {
+		return prenom;
 	}
 
 }
