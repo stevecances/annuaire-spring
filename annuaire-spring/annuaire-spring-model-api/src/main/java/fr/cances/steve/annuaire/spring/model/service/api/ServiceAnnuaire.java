@@ -3,6 +3,7 @@ package fr.cances.steve.annuaire.spring.model.service.api;
 import java.util.Collection;
 
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
+import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.TelephoneVo;
 
 /**
  * Services annuaire (consultation uniquement)
@@ -45,5 +46,15 @@ public interface ServiceAnnuaire {
      *         %like% ou le prénom match avec %like%
      */
     public Collection<PersonneVo> findPersonnesLikePrenomOrNom(String like);
+
+    /**
+     * Retourne le téléphone correspondant à l'idTelephone et null sinon
+     * 
+     * @author Steve Cancès
+     * @Since 1.0.0
+     * @param idTelephone
+     * @return le téléphone correspondant à l'idTelephone et null sinon
+     */
+    public TelephoneVo getTelephone(Long idTelephone);
 
 }

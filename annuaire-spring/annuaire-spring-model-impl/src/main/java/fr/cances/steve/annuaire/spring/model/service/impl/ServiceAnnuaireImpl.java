@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.cances.steve.annuaire.spring.model.persistence.entities.Personne;
+import fr.cances.steve.annuaire.spring.model.persistence.entities.Telephone;
 import fr.cances.steve.annuaire.spring.model.persistence.repositories.PersonneRepository;
+import fr.cances.steve.annuaire.spring.model.persistence.repositories.TelephoneRepository;
 import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaire;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
+import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.TelephoneVo;
 import fr.cances.steve.annuaire.spring.model.service.impl.mapping.EntityMapper;
 
 /**
@@ -30,10 +33,22 @@ public class ServiceAnnuaireImpl implements ServiceAnnuaire {
     PersonneRepository personneRepository;
 
     /**
-     * Bean mapper
+     * Repository concernant l'entity Telephone
+     */
+    @Autowired
+    TelephoneRepository telephoneRepository;
+
+    /**
+     * Entity mapper Personne
      */
     @Autowired
     EntityMapper<Personne, PersonneVo> entityMapperPersonne;
+
+    /**
+     * Entity mapper Telephone
+     */
+    @Autowired
+    EntityMapper<Telephone, TelephoneVo> entityMapperTelephone;
 
     @Override
     public Collection<PersonneVo> getAllPersonnes() {
@@ -55,4 +70,12 @@ public class ServiceAnnuaireImpl implements ServiceAnnuaire {
         return this.entityMapperPersonne.transform(this.personneRepository.findPersonnesLikePrenomOrNom(like));
     }
 
+    @Override
+    public TelephoneVo getTelephone(final Long idTelephone) {
+        TelephoneVo telephoneVo = null;
+        if (idTelephone != null) {
+            telephoneVo = this.entityMapperTelephone.transform(this.telephoneRepository.find(idTelephone));
+        }
+        return telephoneVo;
+    }
 }
