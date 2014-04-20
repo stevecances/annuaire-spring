@@ -13,34 +13,32 @@ import fr.cances.steve.annuaire.spring.model.persistence.repositories.PersonneRe
  * @author Steve Cancès
  * @version 1.0.0
  * @since 1.0.0
- *
  */
 @Repository
 public class PersonneRepositoryJpa extends AbstractRepositoryJpa<Personne, Long> implements PersonneRepository {
 
-	/**
-	 * @author Steve Cancès
-	 * @Since 1.0.0
-	 * 
-	 * @param entityClass
-	 */
-	public PersonneRepositoryJpa(Class<Personne> entityClass) {
-		super(entityClass);
-	}
+    /**
+     * @author Steve Cancès
+     * @Since 1.0.0
+     * @param entityClass
+     */
+    public PersonneRepositoryJpa(final Class<Personne> entityClass) {
+        super(entityClass);
+    }
 
-	/**
-	 * @author Steve Cancès
-	 * @Since 1.0.0
-	 *
-	 */
-	public PersonneRepositoryJpa() {
-		this(Personne.class);
-	}
+    /**
+     * @author Steve Cancès
+     * @Since 1.0.0
+     */
+    public PersonneRepositoryJpa() {
+        this(Personne.class);
+    }
 
-	public Collection<Personne> findPersonnesLikePrenomOrNom(String like) {
-		TypedQuery<Personne> query = this.entityManager.createQuery("From Personne p where p.nom like:like OR p.prenom like:like", this.domainClass);
-		query.setParameter("like", "%"+like+"%");
-		return query.getResultList();
-	}
+    @Override
+    public Collection<Personne> findPersonnesLikePrenomOrNom(final String like) {
+        TypedQuery<Personne> query = this.entityManager.createQuery("From Personne p where p.nom like:like OR p.prenom like:like", this.domainClass);
+        query.setParameter("like", "%" + like + "%");
+        return query.getResultList();
+    }
 
 }

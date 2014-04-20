@@ -23,6 +23,12 @@
 			<artifactId>annuaire-spring-model-impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- Model Support -->
+		<dependency>
+			<groupId>fr.cances.steve</groupId>
+			<artifactId>annuaire-spring-support</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<!-- Validation API -->
 		<dependency>

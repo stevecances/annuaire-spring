@@ -17,6 +17,13 @@
 			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Support -->
+		<dependency>
+			<groupId>fr.cances.steve</groupId>
+			<artifactId>annuaire-spring-support</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		
 		<!-- MySQL connector -->
 		<dependency>
@@ -44,12 +51,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-		</dependency>
-
-		<!-- Dozer POJO mapper -->
-		<dependency>
-			<groupId>net.sf.dozer</groupId>
-			<artifactId>dozer</artifactId>
 		</dependency>
 
 		<!-- Tests -->

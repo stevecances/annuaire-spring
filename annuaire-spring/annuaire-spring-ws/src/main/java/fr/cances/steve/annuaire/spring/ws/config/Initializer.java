@@ -10,24 +10,22 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 import fr.cances.steve.annuaire.spring.model.persistence.config.PersitenceConfig;
-import fr.cances.steve.annuaire.spring.model.service.config.PojoMappingConfig;
 
 public class Initializer implements WebApplicationInitializer {
 
-	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
+    private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
 
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.register(PersitenceConfig.class);
-		context.register(WebMvcConfig.class);
-		context.register(PojoMappingConfig.class);
-		servletContext.addListener(new ContextLoaderListener(context));
-		context.setServletContext(servletContext);
+    @Override
+    public void onStartup(final ServletContext servletContext) throws ServletException {
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(PersitenceConfig.class);
+        context.register(WebMvcConfig.class);
+        servletContext.addListener(new ContextLoaderListener(context));
+        context.setServletContext(servletContext);
 
-		Dynamic servlet = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(context));
-		servlet.addMapping("/");
-		servlet.setLoadOnStartup(1);
-	}
+        Dynamic servlet = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(context));
+        servlet.addMapping("/");
+        servlet.setLoadOnStartup(1);
+    }
 
 }

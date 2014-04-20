@@ -9,37 +9,37 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Telephone {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column(nullable = false)
-	private String telephone;
-	
-	@ManyToOne(optional = false)
-	private Personne personne;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(nullable = false)
+    private String telephone;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne(optional = false)
+    private Personne personne;
 
-	public String getTelephone() {
-		return telephone;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public Personne getPersonne() {
-		return personne;
-	}
+    public String getTelephone() {
+        return telephone;
+    }
 
-	public void setPersonne(Personne personne) {
-		this.personne = personne;
-	}
+    public void setTelephone(final String telephone) {
+        this.telephone = telephone;
+    }
+
+    public Personne getPersonne() {
+        return personne;
+    }
+
+    public void setPersonne(final Personne personne) {
+        this.personne = personne;
+    }
 }

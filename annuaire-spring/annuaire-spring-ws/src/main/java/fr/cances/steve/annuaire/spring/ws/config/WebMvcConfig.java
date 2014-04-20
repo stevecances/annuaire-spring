@@ -15,35 +15,35 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-	private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
-	
-	private static final String LOCALE_CHANGE_INTERCEPTOR_PARAM_NAME = "lang";
+    private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
-	@Bean
-	public ResourceBundleMessageSource  messageSource() {
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("messages/messages");
-		messageSource.setUseCodeAsDefaultMessage(true);
-		return messageSource;
-	}
+    private static final String LOCALE_CHANGE_INTERCEPTOR_PARAM_NAME = "lang";
 
-	@Bean
-	public SessionLocaleResolver localeResolver() {
-		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-		localeResolver.setDefaultLocale(DEFAULT_LOCALE);
-		return localeResolver;
-	}
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages/messages");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
+    }
 
-	@Bean
-	public LocaleChangeInterceptor localeChangeInterceptor() {
-		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName(LOCALE_CHANGE_INTERCEPTOR_PARAM_NAME);
-		return localeChangeInterceptor;
-	}
+    @Bean
+    public SessionLocaleResolver localeResolver() {
+        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+        localeResolver.setDefaultLocale(DEFAULT_LOCALE);
+        return localeResolver;
+    }
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(localeChangeInterceptor());
-	}
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName(LOCALE_CHANGE_INTERCEPTOR_PARAM_NAME);
+        return localeChangeInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(final InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
+    }
 
 }

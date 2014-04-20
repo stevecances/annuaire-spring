@@ -13,53 +13,53 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Personne {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column(nullable = false)
-	private String nom;
-	
-	@Column(nullable = false)
-	private String prenom;
-	
-	@OneToMany(mappedBy = "personne", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	private Collection<Telephone> telephones;
-	
-	public Personne() {
-		this.telephones = new ArrayList<>();
-	}
 
-	public Long getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(nullable = false)
+    private String nom;
 
-	public String getNom() {
-		return nom;
-	}
+    @Column(nullable = false)
+    private String prenom;
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    @OneToMany(mappedBy = "personne", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Collection<Telephone> telephones;
 
-	public String getPrenom() {
-		return prenom;
-	}
+    public Personne() {
+        this.telephones = new ArrayList<>();
+    }
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Collection<Telephone> getTelephones() {
-		return telephones;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public void setTelephones(Collection<Telephone> telephones) {
-		this.telephones = telephones;
-	}
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(final String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(final String prenom) {
+        this.prenom = prenom;
+    }
+
+    public Collection<Telephone> getTelephones() {
+        return telephones;
+    }
+
+    public void setTelephones(final Collection<Telephone> telephones) {
+        this.telephones = telephones;
+    }
 }

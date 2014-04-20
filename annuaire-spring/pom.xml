@@ -18,17 +18,18 @@
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.war.plugin.version>2.4</maven.war.plugin.version>
 
-		<mysql.connector.version>5.1.30</mysql.connector.version>
-		<hibernate.version>4.3.4.Final</hibernate.version>
-		<validation.api.version>1.1.0.Final</validation.api.version>
-		<hibernate.validator.version>5.1.0.Final</hibernate.validator.version>
-		<spring.version>4.0.3.RELEASE</spring.version>
-		<javax.servlet.api.version>3.0.1</javax.servlet.api.version>
-		<jackson2.version>2.3.2</jackson2.version>
-		<dozer.version>5.4.0</dozer.version>
+		<dependency.guava.version>16.0.1</dependency.guava.version>
+		<dependency.mysql.connector.version>5.1.30</dependency.mysql.connector.version>
+		<dependency.hibernate.version>4.3.4.Final</dependency.hibernate.version>
+		<dependency.validation.api.version>1.1.0.Final</dependency.validation.api.version>
+		<dependency.hibernate.validator.version>5.1.0.Final</dependency.hibernate.validator.version>
+		<dependency.spring.version>4.0.3.RELEASE</dependency.spring.version>
+		<dependency.javax.servlet.api.version>3.0.1</dependency.javax.servlet.api.version>
+		<dependency.jackson2.version>2.3.2</dependency.jackson2.version>
+		<dependency.slf4j.version>1.7.6</dependency.slf4j.version>
 
-		<junit.version>4.11</junit.version>
-		<hsqldb.version>2.3.2</hsqldb.version>
+		<dependency.junit.version>4.11</dependency.junit.version>
+		<dependency.hsqldb.version>2.3.2</dependency.hsqldb.version>
 
 	</properties>
 
@@ -36,6 +37,7 @@
 		<module>annuaire-spring-model-api</module>
 		<module>annuaire-spring-model-impl</module>
 		<module>annuaire-spring-ws</module>
+		<module>annuaire-spring-support</module>
 	</modules>
 
 	<build>
@@ -54,118 +56,127 @@
 
 	<dependencyManagement>
 		<dependencies>
+
+			<!-- Guava -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${dependency.guava.version}</version>
+			</dependency>
 			<!-- MySQL connector -->
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql.connector.version}</version>
+				<version>${dependency.mysql.connector.version}</version>
 			</dependency>
 			<!-- Hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${hibernate.version}</version>
+				<version>${dependency.hibernate.version}</version>
 			</dependency>
 			<!-- Validation API -->
 			<dependency>
 				<groupId>javax.validation</groupId>
 				<artifactId>validation-api</artifactId>
-				<version>${validation.api.version}</version>
+				<version>${dependency.validation.api.version}</version>
 			</dependency>
 			<!-- Hibernate validator -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>${hibernate.validator.version}</version>
+				<version>${dependency.hibernate.validator.version}</version>
 			</dependency>
 			<!-- Spring framework -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-web</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-tx</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-aspects</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 			</dependency>
 			<!-- Javax Servlet API -->
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
-				<version>${javax.servlet.api.version}</version>
+				<version>${dependency.javax.servlet.api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<!-- Jackson core for JSON -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
-				<version>${jackson2.version}</version>
+				<version>${dependency.jackson2.version}</version>
 			</dependency>
 			<!-- Jackson annotations -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-annotations</artifactId>
-				<version>${jackson2.version}</version>
+				<version>${dependency.jackson2.version}</version>
 			</dependency>
 			<!-- Jackson JSON/POJO databinding; ObjectMapper -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
-				<version>${jackson2.version}</version>
+				<version>${dependency.jackson2.version}</version>
 			</dependency>
-			<!-- Dozer POJO mapper -->
+			<!-- slf4j -->
 			<dependency>
-				<groupId>net.sf.dozer</groupId>
-				<artifactId>dozer</artifactId>
-				<version>${dozer.version}</version>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${dependency.slf4j.version}</version>
 			</dependency>
+
+
 
 			<!-- Tests -->
 			<!-- JUnit -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
+				<version>${dependency.junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<!-- Spring framework - Tests -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
-				<version>${spring.version}</version>
+				<version>${dependency.spring.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<!-- hsqldb -->
 			<dependency>
 				<groupId>org.hsqldb</groupId>
 				<artifactId>hsqldb</artifactId>
-				<version>${hsqldb.version}</version>
+				<version>${dependency.hsqldb.version}</version>
 				<scope>test</scope>
 			</dependency>
 
