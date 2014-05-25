@@ -22,23 +22,13 @@
 			<groupId>fr.cances.steve</groupId>
 			<artifactId>annuaire-spring-model-impl</artifactId>
 			<version>${project.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Model Support -->
 		<dependency>
 			<groupId>fr.cances.steve</groupId>
 			<artifactId>annuaire-spring-support</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Validation API -->
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-		</dependency>
-		<!-- Hibernate validator -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 
 		<!-- Spring framework -->
@@ -54,7 +44,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
 		</dependency>
-
+		
 		<!-- Spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -85,6 +75,12 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<!-- Javax Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
 		</dependency>
 
 	</dependencies>

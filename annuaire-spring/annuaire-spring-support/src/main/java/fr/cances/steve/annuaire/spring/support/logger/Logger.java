@@ -1,37 +1,120 @@
-/**
- * 
- */
 package fr.cances.steve.annuaire.spring.support.logger;
 
 /**
  * @author Steve Cancès
- * @version
- * @since
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public interface Logger {
 
-    public void debug(String msg);
+    /**
+     * Log de niveau trace.
+     * 
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void trace(String format, Object... args);
 
-    public void debug(String msg, Throwable throwable);
+    /**
+     * Log de niveau debug.
+     * 
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void debug(String format, Object... args);
 
-    public void debug(String msg, Object... aguments);
+    /**
+     * Log de niveau info.
+     * 
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void info(String format, Object... args);
 
-    public void info(String msg);
+    /**
+     * Log de niveau warn.
+     * 
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void warn(String format, Object... args);
 
-    public void info(String msg, Throwable throwable);
+    /**
+     * Log de niveau error.
+     * 
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void error(String format, Object... args);
 
-    public void info(String msg, Object... aguments);
+    /**
+     * Log de niveau trace.
+     * 
+     * @param cause
+     *            La cause du log.
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void trace(Throwable cause, String format, Object... args);
 
-    public void warn(String msg);
+    /**
+     * Log de niveau debug.
+     * 
+     * @param cause
+     *            La cause du log.
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void debug(Throwable cause, String format, Object... args);
 
-    public void warn(String msg, Throwable throwable);
+    /**
+     * Log de niveau info.
+     * 
+     * @param cause
+     *            La cause du log.
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void info(Throwable cause, String format, Object... args);
 
-    public void warn(String msg, Object... aguments);
+    /**
+     * Log de niveau warn.
+     * 
+     * @param cause
+     *            La cause du log.
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void warn(Throwable cause, String format, Object... args);
 
-    public void error(String msg);
-
-    public void error(String msg, Throwable throwable);
-
-    public void error(String msg, Object... aguments);
+    /**
+     * Log de niveau error.
+     * 
+     * @param cause
+     *            La cause du log.
+     * @param format
+     *            Le message de log.
+     * @param args
+     *            Les arguments du message de log.
+     */
+    void error(Throwable cause, String format, Object... args);
 
 }

@@ -3,7 +3,6 @@
  */
 package fr.cances.steve.annuaire.spring.support.logger;
 
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Steve Cancès
@@ -12,70 +11,103 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggerLog4j implements Logger {
 
-    private final org.slf4j.Logger logger;
+    /** Le logger log4j. */
+    private final org.apache.log4j.Logger logger;
 
-    public LoggerLog4j(final Class<?> clazz) {
-        this.logger = LoggerFactory.getLogger(clazz);
+    /**
+     * Constructeur protected de {@code DefaultLogger}.
+     * 
+     * @param clazz
+     *            La classe à logger.
+     */
+    protected LoggerLog4j(final Class<?> clazz) {
+
+        this.logger = org.apache.log4j.Logger.getLogger(clazz);
     }
 
     @Override
-    public void debug(final String msg) {
-        this.logger.debug(msg);
+    public void trace(final String format, final Object... args) {
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(String.format(format, args));
+        }
     }
 
     @Override
-    public void debug(final String msg, final Throwable throwable) {
-        this.logger.debug(msg, throwable);
+    public void debug(final String format, final Object... args) {
+
+        if (this.logger.isDebugEnabled()) {
+            this.logger.debug(String.format(format, args));
+        }
     }
 
     @Override
-    public void debug(final String msg, final Object... aguments) {
-        this.logger.debug(msg, aguments);
+    public void info(final String format, final Object... args) {
+
+        if (this.logger.isInfoEnabled()) {
+            this.logger.info(String.format(format, args));
+        }
     }
 
     @Override
-    public void info(final String msg) {
-        this.logger.info(msg);
+    public void warn(final String format, final Object... args) {
+
+        this.logger.warn(String.format(format, args));
     }
 
     @Override
-    public void info(final String msg, final Throwable throwable) {
-        this.logger.info(msg, throwable);
+    public void error(final String format, final Object... args) {
+
+        this.logger.error(String.format(format, args));
     }
 
     @Override
-    public void info(final String msg, final Object... aguments) {
-        this.logger.info(msg, aguments);
+    public void trace(final Throwable cause, final String format,
+            final Object... args) {
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(String.format(format, args), cause);
+        }
     }
 
     @Override
-    public void warn(final String msg) {
-        this.logger.warn(msg);
+    public void debug(final Throwable cause, final String format,
+            final Object... args) {
+
+        if (this.logger.isDebugEnabled()) {
+            this.logger.debug(String.format(format, args), cause);
+        }
     }
 
     @Override
-    public void warn(final String msg, final Throwable throwable) {
-        this.logger.warn(msg, throwable);
+    public void info(final Throwable cause, final String format,
+            final Object... args) {
+
+        if (this.logger.isInfoEnabled()) {
+            this.logger.info(String.format(format, args), cause);
+        }
     }
 
     @Override
-    public void warn(final String msg, final Object... aguments) {
-        this.logger.warn(msg, aguments);
+    public void warn(final Throwable cause, final String format,
+            final Object... args) {
+
+        this.logger.warn(String.format(format, args), cause);
     }
 
     @Override
-    public void error(final String msg) {
-        this.logger.error(msg);
+    public void error(final Throwable cause, final String format,
+            final Object... args) {
+
+        this.logger.error(String.format(format, args), cause);
     }
 
-    @Override
-    public void error(final String msg, final Throwable throwable) {
-        this.logger.error(msg, throwable);
-    }
+    /**
+     * Logger shutdown
+     */
+    public static void shutdown() {
 
-    @Override
-    public void error(final String msg, final Object... aguments) {
-        this.logger.debug(msg, aguments);
+        // LogManager.shutdown();
     }
 
 }

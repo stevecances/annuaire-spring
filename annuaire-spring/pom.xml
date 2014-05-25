@@ -19,15 +19,22 @@
 		<maven.war.plugin.version>2.4</maven.war.plugin.version>
 
 		<dependency.guava.version>16.0.1</dependency.guava.version>
+		<dependency.commons-lang3.version>3.3.1</dependency.commons-lang3.version>
+		<dependency.commons-collections4.version>4.0</dependency.commons-collections4.version>
+
 		<dependency.mysql.connector.version>5.1.30</dependency.mysql.connector.version>
+		<dependency.jpa.version>1.0.0.Final</dependency.jpa.version>
 		<dependency.hibernate.version>4.3.4.Final</dependency.hibernate.version>
 		<dependency.validation.api.version>1.1.0.Final</dependency.validation.api.version>
 		<dependency.hibernate.validator.version>5.1.0.Final</dependency.hibernate.validator.version>
-		<dependency.spring.version>4.0.3.RELEASE</dependency.spring.version>
-		<dependency.spring.security.version>3.2.3.RELEASE</dependency.spring.security.version>
+		<dependency.spring.version>4.0.5.RELEASE</dependency.spring.version>
+		<dependency.spring.security.version>3.2.4.RELEASE</dependency.spring.security.version>
 		<dependency.javax.servlet.api.version>3.0.1</dependency.javax.servlet.api.version>
 		<dependency.jackson2.version>2.3.2</dependency.jackson2.version>
-		<dependency.slf4j.version>1.7.6</dependency.slf4j.version>
+		<dependency.javax.inject.version>1</dependency.javax.inject.version>
+
+		<dependance.slf4j.version>1.5.8</dependance.slf4j.version>
+		<dependance.log4j.version>1.2.17</dependance.log4j.version>
 
 		<dependency.junit.version>4.11</dependency.junit.version>
 		<dependency.hsqldb.version>2.3.2</dependency.hsqldb.version>
@@ -35,10 +42,10 @@
 	</properties>
 
 	<modules>
-		<module>annuaire-spring-model-api</module>
-		<module>annuaire-spring-model-impl</module>
+		<!-- <module>annuaire-spring-model-api</module> <module>annuaire-spring-model-impl</module> -->
 		<module>annuaire-spring-ws</module>
 		<module>annuaire-spring-support</module>
+		<module>annuaire-spring-model</module>
 	</modules>
 
 	<build>
@@ -64,11 +71,30 @@
 				<artifactId>guava</artifactId>
 				<version>${dependency.guava.version}</version>
 			</dependency>
+			<!-- Apache commons lang3 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${dependency.commons-lang3.version}</version>
+			</dependency>
+			<!-- Apache commons collections4 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${dependency.commons-collections4.version}</version>
+			</dependency>
+
 			<!-- MySQL connector -->
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${dependency.mysql.connector.version}</version>
+			</dependency>
+			<!-- JPA 2.1 -->
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${dependency.jpa.version}</version>
 			</dependency>
 			<!-- Hibernate -->
 			<dependency>
@@ -127,6 +153,11 @@
 			<!-- Spring security -->
 			<dependency>
 				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${dependency.spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
 				<version>${dependency.spring.security.version}</version>
 			</dependency>
@@ -160,11 +191,37 @@
 				<artifactId>jackson-databind</artifactId>
 				<version>${dependency.jackson2.version}</version>
 			</dependency>
+			<!-- Javax Inject -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${dependency.javax.inject.version}</version>
+			</dependency>
+
+			<!-- LOGGER -->
 			<!-- slf4j -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-simple</artifactId>
-				<version>${dependency.slf4j.version}</version>
+				<artifactId>slf4j-api</artifactId>
+				<version>${dependance.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${dependance.slf4j.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${dependance.slf4j.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<!-- Log4j -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${dependance.log4j.version}</version>
 			</dependency>
 
 			<!-- Tests -->
