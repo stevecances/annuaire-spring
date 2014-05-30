@@ -1,9 +1,11 @@
 package fr.cances.steve.annuaire.spring.ws.controllers;
 
+import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaire;
+import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaireAdmin;
+import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
+import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.TelephoneVo;
 import java.util.Collection;
-
 import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,11 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaire;
-import fr.cances.steve.annuaire.spring.model.service.api.ServiceAnnuaireAdmin;
-import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
-import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.TelephoneVo;
 
 /**
  * Controleur Annuaire
@@ -31,7 +28,6 @@ public class ControllerAnnuaireRest {
     /*
      * CONSULTATION
      */
-
     /**
      * Le service de consultation de l'annuaire
      */
@@ -70,7 +66,7 @@ public class ControllerAnnuaireRest {
         ResponseEntity<PersonneVo> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         PersonneVo personneVo = this.serviceAnnuaire.getPersonne(idPersonne);
         if (personneVo != null) {
-            response = new ResponseEntity<PersonneVo>(personneVo, HttpStatus.OK);
+            response = new ResponseEntity<>(personneVo, HttpStatus.OK);
         }
         return response;
     }
@@ -97,7 +93,6 @@ public class ControllerAnnuaireRest {
     /*
      * ADMINISTRATION
      */
-
     /**
      * Créer une personne
      * 
@@ -159,7 +154,9 @@ public class ControllerAnnuaireRest {
      * @author Steve Cancès
      * @since 1.0.0
      * @param idPersonne
+     *            L'identifiant de la personne concernée.
      * @param telephoneVo
+     *            Les informations du telephone à ajouter.
      * @return Le téléphone créé (404 si personne non trouvée)
      */
     @RequestMapping(value = "/personne/{idPersonne}/telephones", method = RequestMethod.POST)
@@ -176,7 +173,7 @@ public class ControllerAnnuaireRest {
      * Edite un telephone
      * 
      * @author Steve Cancès
-     * @since1.0.0
+     * @since 1.0.0
      * @param idTelephone
      *            L'id du téléphone à éditer
      * @param telephoneVo

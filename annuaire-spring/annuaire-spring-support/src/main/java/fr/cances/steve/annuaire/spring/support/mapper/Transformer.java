@@ -1,13 +1,11 @@
 package fr.cances.steve.annuaire.spring.support.mapper;
 
-import java.util.Collection;
-
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
-
 import fr.cances.steve.annuaire.spring.support.logger.Logger;
 import fr.cances.steve.annuaire.spring.support.logger.LoggerFactory;
+import java.util.Collection;
 
 /**
  * S'appuie sur un {@link Mapper} pour transformer des {@link Collection}
@@ -22,10 +20,14 @@ import fr.cances.steve.annuaire.spring.support.logger.LoggerFactory;
  */
 public class Transformer<I, O> implements Mapper<I, O> {
 
-    /** Logger */
+    /**
+     * Logger
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(Transformer.class);
 
-    /** Le mapper */
+    /**
+     * Le mapper
+     */
     protected Mapper<I, O> mapper;
 
     /**
@@ -88,15 +90,7 @@ public class Transformer<I, O> implements Mapper<I, O> {
      */
     public Collection<I> reverse(final Collection<O> outputs) {
 
-        return Lists.newArrayList(FluentIterable.from(outputs).transform(new Function<O, I>() {
-
-            @Override
-            public I apply(final O input) {
-
-                return Transformer.this.reverse(input);
-            }
-
-        }));
+        return Lists.newArrayList(FluentIterable.from(outputs).transform(output -> reverse(output)));
     }
 
     /**

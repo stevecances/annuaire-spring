@@ -1,13 +1,12 @@
 package fr.cances.steve.annuaire.spring.model.service.impl.mapping;
 
+import fr.cances.steve.annuaire.spring.model.persistence.entity.Telephone;
+import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.TelephoneVo;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import fr.cances.steve.annuaire.spring.model.persistence.entity.Telephone;
-import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.TelephoneVo;
-
 /**
- * {@link EntityMapper} pour les classes : {@link Telephone} <->
+ * {@link EntityMapper} pour les classes : {@link Telephone} et
  * {@link TelephoneVo}.
  * 
  * @author Steve Cancès

@@ -2,7 +2,6 @@ package fr.cances.steve.annuaire.spring.model.persistence.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,28 +20,40 @@ import javax.persistence.OneToOne;
 @Entity
 public class Utilisateur implements IEntity<Long> {
 
-    /** L'identifiant technique. */
+    /**
+     * L'identifiant technique.
+     */
     @Id
     @GeneratedValue
     private Long id;
 
-    /** Le nom d'utilisateur de l'utilisateur. */
+    /**
+     * Le nom d'utilisateur de l'utilisateur.
+     */
     @Column(nullable = false, unique = true)
     private String username;
 
-    /** Le mot de passe de l'utilisateur. */
+    /**
+     * Le mot de passe de l'utilisateur.
+     */
     @Column(nullable = false)
     private String password;
 
-    /** La personne correspondante à l'utilisateur. */
+    /**
+     * La personne correspondante à l'utilisateur.
+     */
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     private Personne personne;
 
-    /** Si l'utilisateur est administrateur. */
+    /**
+     * Si l'utilisateur est administrateur.
+     */
     @Column(nullable = false)
     private boolean admin;
 
-    /** La liste de contacts de l'utilisateur. */
+    /**
+     * La liste de contacts de l'utilisateur.
+     */
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
     private final Collection<Personne> contacts = new ArrayList<>();
 
@@ -152,7 +163,9 @@ public class Utilisateur implements IEntity<Long> {
      */
     public static class Builder {
 
-        /** Le pojo géré par le {@code Builder} */
+        /**
+         * Le pojo géré par le {@code Builder}
+         */
         private final Utilisateur pojo;
 
         private Builder() {
@@ -232,13 +245,12 @@ public class Utilisateur implements IEntity<Long> {
 
         /**
          * @author Steve Cancès
+         * @param contact
          * @since 1.0.0
-         * @param personne
-         *            Le contact à ajouter.
          * @return Le {@code Builder} pour chainer les appels.
          */
-        public Builder withContact(final Personne constact) {
-            this.pojo.contacts.add(constact);
+        public Builder withContact(final Personne contact) {
+            this.pojo.contacts.add(contact);
             return this;
         }
 

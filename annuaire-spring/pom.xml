@@ -12,8 +12,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<jre.source.version>1.7</jre.source.version>
-		<jre.target.version>1.7</jre.target.version>
+		<jre.source.version>1.8</jre.source.version>
+		<jre.target.version>1.8</jre.target.version>
 
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.war.plugin.version>2.4</maven.war.plugin.version>

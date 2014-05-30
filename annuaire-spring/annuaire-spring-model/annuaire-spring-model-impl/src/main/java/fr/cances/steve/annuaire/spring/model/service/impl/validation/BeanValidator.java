@@ -8,6 +8,10 @@ import fr.cances.steve.annuaire.spring.model.service.impl.validation.vo.IVoValid
  * @author Steve Cancès
  * @version 1.0.0
  * @since 1.0.0
+ * @param <V>
+ *            La classe du vo.
+ * @param <P>
+ *            La classe de l'identifiant du vo.
  */
 public interface BeanValidator<V extends AbstractVo<P>, P> {
 

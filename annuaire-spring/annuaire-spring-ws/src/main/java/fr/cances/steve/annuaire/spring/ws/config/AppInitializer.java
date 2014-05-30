@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package fr.cances.steve.annuaire.spring.ws.config;
 
@@ -7,8 +7,8 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 /**
  * @author Steve Cancès
- * @version
- * @since
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 

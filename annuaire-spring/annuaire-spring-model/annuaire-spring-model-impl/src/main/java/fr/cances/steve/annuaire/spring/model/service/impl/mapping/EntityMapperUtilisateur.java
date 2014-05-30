@@ -1,17 +1,15 @@
 package fr.cances.steve.annuaire.spring.model.service.impl.mapping;
 
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
 import fr.cances.steve.annuaire.spring.model.persistence.entity.Personne;
 import fr.cances.steve.annuaire.spring.model.persistence.entity.Utilisateur;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.PersonneVo;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.UtilisateurVo;
+import javax.inject.Inject;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 /**
- * {@link EntityMapper} pour les classes : {@link Utilisateur} <->
+ * {@link EntityMapper} pour les classes : {@link Utilisateur} et
  * {@link UtilisateurVo}.
  * 
  * @author Steve Cancès
