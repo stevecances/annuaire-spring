@@ -1,17 +1,22 @@
 /**
- * 
+ *
  */
 package fr.cances.steve.annuaire.spring.ws.handlers;
 
+import fr.cances.steve.annuaire.spring.model.service.api.exception.BeanValidationException;
+import fr.cances.steve.annuaire.spring.model.service.api.exception.ResourceNotFoundException;
+import fr.cances.steve.annuaire.spring.model.service.api.exception.vo.ErrorVo;
+import fr.cances.steve.annuaire.spring.support.logger.Logger;
+import fr.cances.steve.annuaire.spring.support.logger.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import javax.inject.Inject;
-
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,9 +24,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import fr.cances.steve.annuaire.spring.support.logger.Logger;
-import fr.cances.steve.annuaire.spring.support.logger.LoggerFactory;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
  * @author Steve Cancès
@@ -29,33 +33,84 @@ import fr.cances.steve.annuaire.spring.support.logger.LoggerFactory;
  * @since 1.0.0
  */
 @ControllerAdvice
-public class RestErrorHandler {
+public class RestErrorHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestErrorHandler.class);
 
     @Inject
     private MessageSource messageSource;
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    /* ---------------- */
+    /* -- OVERRIDED --- */
+    /* ---------------- */
+    /**
+     * Gestion des MethodArgumentNotValidException (levée lors d'une validation)
+     * 
+     * @param ex
+     *            la MethodArgumentNotValidException
+     * @return le ValidationErrorVo
+     */
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            final MethodArgumentNotValidException ex,
+            final HttpHeaders headers, final HttpStatus status,
+            final WebRequest request) {
+
+        LOGGER.info("Interception d'une erreur de validation : (%s)",
+                MethodArgumentNotValidException.class.getName());
+
+        final BindingResult result = ex.getBindingResult();
+        final List<FieldError> fieldErrors = result.getFieldErrors();
+
+        return new ResponseEntity<>(processFieldErrors(fieldErrors), HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Gestion des BeanValidationException (levée lors de la validation de
+     * bean).
+     * 
+     * @param exception
+     *            la BeanValidationException
+     * @return ValidationErrorVo qui représente les erreurs de validation
+     */
+    @ExceptionHandler(BeanValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ValidationErrorVo processValidationError(final MethodArgumentNotValidException ex) {
-        LOGGER.debug("Handling form validation error");
+    public ErrorVo handleBeanValidationException(
+            final BeanValidationException exception) {
 
-        BindingResult result = ex.getBindingResult();
-        List<FieldError> fieldErrors = result.getFieldErrors();
+        LOGGER.info("Interception d'une erreur de validation : (%s)",
+                exception.getValidationErrorVo());
+        return exception.getValidationErrorVo();
+    }
 
-        return processFieldErrors(fieldErrors);
+    /**
+     * Gestion des ResourceNotFoundException (Levée lorsqu'une ressource est
+     * introuvable).
+     * 
+     * @param ex
+     *            la ResourceNotFoundException
+     * @return L'ErrorVo qui contient le message
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public ErrorVo handleResourceNotFoundException(
+            final ResourceNotFoundException ex) {
+
+        LOGGER.info("Interception d'une erreur de resource non trouvée (%s)",
+                ResourceNotFoundException.class.getName());
+        return new ErrorVo(ex.getMessage());
     }
 
     private ValidationErrorVo processFieldErrors(final List<FieldError> fieldErrors) {
         ValidationErrorVo validationErrorVo = new ValidationErrorVo();
 
-        for (FieldError fieldError : fieldErrors) {
+        fieldErrors.stream().forEach((fieldError) -> {
             String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);
             LOGGER.debug("Adding error message: {} to field: {}", localizedErrorMessage, fieldError.getField());
             validationErrorVo.addFieldError(fieldError.getField(), localizedErrorMessage);
-        }
+        });
 
         return validationErrorVo;
     }

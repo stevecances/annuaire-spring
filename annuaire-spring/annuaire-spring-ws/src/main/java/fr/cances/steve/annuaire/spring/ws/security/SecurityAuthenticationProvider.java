@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
-import fr.cances.steve.annuaire.spring.model.service.api.ServiceSecurity;
+import fr.cances.steve.annuaire.spring.model.service.api.ServiceSecurityUser;
 
 /**
- * Security {@link AuthenticationProvider} se basant sur {@link ServiceSecurity}
+ * Security {@link AuthenticationProvider} se basant sur {@link ServiceSecurityUser}
  * .
  * 
  * @author Steve Cancès
@@ -29,7 +29,7 @@ import fr.cances.steve.annuaire.spring.model.service.api.ServiceSecurity;
 public class SecurityAuthenticationProvider implements AuthenticationProvider {
 
     @Inject
-    private ServiceSecurity serviceSecurity;
+    private ServiceSecurityUser serviceSecurity;
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {

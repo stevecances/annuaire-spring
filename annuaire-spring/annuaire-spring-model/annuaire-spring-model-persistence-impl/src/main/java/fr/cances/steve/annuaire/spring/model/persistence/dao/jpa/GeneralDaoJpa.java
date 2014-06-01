@@ -3,7 +3,6 @@ package fr.cances.steve.annuaire.spring.model.persistence.dao.jpa;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -36,7 +35,9 @@ import fr.cances.steve.annuaire.spring.model.persistence.entity.IEntity;
 @Transactional(readOnly = true)
 public class GeneralDaoJpa implements GeneralDao {
 
-    /** L'Entity Manager qui gère la base de données */
+    /**
+     * L'Entity Manager qui gère la base de données
+     */
     @PersistenceContext(name = "entityManagerFactory")
     protected EntityManager entityManager;
 
@@ -54,7 +55,7 @@ public class GeneralDaoJpa implements GeneralDao {
         final List<Predicate> predicates = Lists.newArrayList();
 
         // pour tous les champs
-        for (final Entry<String, Object> filedPathValue : columnNamesValues.entrySet()) {
+        columnNamesValues.entrySet().stream().map((filedPathValue) -> {
             final Object fieldValue = filedPathValue.getValue();
             Path<T> fieldPath = null;
             // construction du chemin vers la proprieté
@@ -65,13 +66,14 @@ public class GeneralDaoJpa implements GeneralDao {
                     fieldPath = fieldPath.get(propertyName);
                 }
             }
-
             final Predicate predicate = criteriaBuilder.equal(
                     fieldPath,
                     fieldValue
-                    );
+            );
+            return predicate;
+        }).forEach((predicate) -> {
             predicates.add(predicate);
-        }
+        });
 
         criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
 
@@ -79,5 +81,4 @@ public class GeneralDaoJpa implements GeneralDao {
 
         return typedQuery.getResultList();
     }
-
 }

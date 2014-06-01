@@ -1,15 +1,8 @@
 package fr.cances.steve.annuaire.spring.model.service.impl;
 
-import java.util.Collection;
-
-import javax.inject.Inject;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
 import fr.cances.steve.annuaire.spring.model.persistence.dao.IDao;
 import fr.cances.steve.annuaire.spring.model.persistence.entity.IEntity;
-import fr.cances.steve.annuaire.spring.model.service.api.IService;
+import fr.cances.steve.annuaire.spring.model.service.api.BasicService;
 import fr.cances.steve.annuaire.spring.model.service.api.exception.BeanValidationException;
 import fr.cances.steve.annuaire.spring.model.service.api.exception.ResourceNotFoundException;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.AbstractVo;
@@ -22,43 +15,74 @@ import fr.cances.steve.annuaire.spring.model.service.impl.validation.vo.IVoValid
 import fr.cances.steve.annuaire.spring.model.service.impl.validation.vo.VoValidationGenerator;
 import fr.cances.steve.annuaire.spring.support.logger.Logger;
 import fr.cances.steve.annuaire.spring.support.logger.LoggerFactory;
+import java.util.Collection;
+import javax.inject.Inject;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
  * @author Steve Cancès
  * @version 1.0.0
+ * @param <E>
+ *            La classe de l'entity gérée par le service.
+ * @param <V>
+ *            La classe du vo gérée par le service.
+ * @param <A>
+ *            La classe du voValidation géré par le service.
+ * @param <P>
+ *            La classe de l'identifiaant de l'entity et du vo.
  * @since 1.0.0
  */
-public abstract class GenericService<E extends IEntity<P>, V extends AbstractVo<P>, A extends IVoValidation<V, P>, P> implements IService<V, P> {
+public abstract class AbstractBasicService<E extends IEntity<P>, V extends AbstractVo<P>, A extends IVoValidation<V, P>, P> implements BasicService<V, P> {
 
-    /** Logger */
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericService.class);
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractBasicService.class);
 
-    /** La classe de l'entity gérée par le Process */
-    private final Class<E> entityClass;
+    /**
+     * La classe de l'entity gérée par le Process.
+     */
+    protected final Class<E> entityClass;
 
-    /** La classe du vo gérée par le Process */
-    private final Class<V> voClass;
+    /**
+     * La classe du vo gérée par le Process.
+     */
+    protected final Class<V> voClass;
 
-    /** La classe du vo de validation gérée par le Process */
-    private final Class<A> voValidationClass;
+    /**
+     * La classe du vo de validation gérée par le Process.
+     */
+    protected final Class<A> voValidationClass;
 
-    /** Le générateur de vo validation */
-    private final VoValidationGenerator<V, A, P> voValidationGenerator;
+    /**
+     * Le générateur de vo validation.
+     */
+    protected final VoValidationGenerator<V, A, P> voValidationGenerator;
 
-    /** Le validateur de voValidation */
+    /**
+     * Le validateur de voValidation.
+     */
     @Inject
-    private BeanValidator<V, P> validator;
+    protected BeanValidator<V, P> validator;
 
+    /**
+     * Le DAO.
+     */
     @Inject
-    /** Le DAO */
-    private IDao<E, P> dao;
+    protected IDao<E, P> dao;
 
+    /**
+     * L'entity mapper entre IEntity et AbstractVo.
+     */
     @Inject
-    /** L'entity mapper IEntity <-> AbstractVo */
-    private EntityMapper<E, V, P> entityMapper;
+    protected EntityMapper<E, V, P> entityMapper;
 
+    /**
+     * Le gestionnaire d'exception.
+     */
     @Inject
-    private ExceptionHelper exceptionHelper;
+    protected ExceptionHelper exceptionHelper;
 
     /**
      * Constructeur par defaut.
@@ -72,7 +96,7 @@ public abstract class GenericService<E extends IEntity<P>, V extends AbstractVo<
      * @param voValidationClass
      *            La classe du voValidation.
      */
-    public GenericService(final Class<E> entityClass, final Class<V> voClass, final Class<A> voValidationClass) {
+    public AbstractBasicService(final Class<E> entityClass, final Class<V> voClass, final Class<A> voValidationClass) {
 
         Assert.notNull(entityClass, "entityClass must not be null !");
         Assert.notNull(voClass, "voClass must not be null !");
@@ -82,27 +106,6 @@ public abstract class GenericService<E extends IEntity<P>, V extends AbstractVo<
         this.voClass = voClass;
         this.voValidationClass = voValidationClass;
         this.voValidationGenerator = VoValidationGenerator.with(voValidationClass);
-    }
-
-    /**
-     * @return the voClass
-     */
-    public Class<V> getVoClass() {
-        return voClass;
-    }
-
-    /**
-     * @return the dao
-     */
-    public IDao<E, P> getDao() {
-        return dao;
-    }
-
-    /**
-     * @return the exceptionHelper
-     */
-    public ExceptionHelper getExceptionHelper() {
-        return exceptionHelper;
     }
 
     @Transactional(readOnly = true)
@@ -142,13 +145,11 @@ public abstract class GenericService<E extends IEntity<P>, V extends AbstractVo<
     }
 
     // CREATION ET EDITION
-
     protected void validate(final V vo, final Class<?> groups) throws BeanValidationException {
         this.validator.validate(this.voValidationGenerator.getVoValidation(vo), groups);
     }
 
     // CREATION
-
     protected V validateReverseCreateTransform(final V vo)
             throws BeanValidationException {
 
@@ -185,7 +186,6 @@ public abstract class GenericService<E extends IEntity<P>, V extends AbstractVo<
     }
 
     // EDITION
-
     protected V validateUpdateentityEditTransform(final V vo)
             throws BeanValidationException, ResourceNotFoundException {
 

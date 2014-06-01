@@ -25,6 +25,11 @@ public class EntityMapperUtilisateur extends EntityMapper<Utilisateur, Utilisate
     /**
      * Le status d'administration ({@link Utilisateur#isAdmin()}) et le username
      * ({@link Utilisateur#getUsername()}) ne sont pas modifiés.
+     * 
+     * @param entity
+     *            L'entity à mettre à jour.
+     * @param vo
+     *            Le vo contenant les nouvelles informations.
      */
     @Override
     public void updateEntityFromVo(final Utilisateur entity, final UtilisateurVo vo) {
@@ -32,13 +37,13 @@ public class EntityMapperUtilisateur extends EntityMapper<Utilisateur, Utilisate
         Assert.notNull(entity, "L'utilisateur ne doit pas être null !");
         Assert.notNull(vo, "L'utilisateurVo ne doit pas être null !");
 
-        // Le status d'administration et le username ne sont pas modifiés.
-        if (vo.getPassword() != null) {
-            entity.setPassword(vo.getPassword());
-        }
-        if (vo.getPersonne() != null) {
-            this.entityMapperPersonne.updateEntityFromVo(entity.getPersonne(), vo.getPersonne());
-        }
+        this.entityMapperPersonne.updateEntityFromVo(
+                entity.getPersonne(),
+                PersonneVo.Builder
+                        .newInstance()
+                        .withNom(vo.getNom())
+                        .withPrenom(vo.getPrenom())
+                        .build());
     }
 
     @Override
@@ -50,12 +55,17 @@ public class EntityMapperUtilisateur extends EntityMapper<Utilisateur, Utilisate
                 .newInstance()
                 .withId(utilisateur.getId())
                 .withUsername(utilisateur.getUsername())
-                .withPersonne(this.entityMapperPersonne.transform(utilisateur.getPersonne()))
+                .withPrenom(utilisateur.getPersonne().getPrenom())
+                .withNom(utilisateur.getPersonne().getNom())
                 .build();
     }
 
     /**
      * Par defaut l'utilisateur créé n'est pas administrateur.
+     * 
+     * @param utilisateurVo
+     *            Le vo à reverse.
+     * @return L'utilisateur correspondant au vo.
      */
     @Override
     public Utilisateur reverse(final UtilisateurVo utilisateurVo) {
@@ -67,7 +77,11 @@ public class EntityMapperUtilisateur extends EntityMapper<Utilisateur, Utilisate
                 .newInstance()
                 .withUsername(utilisateurVo.getUsername())
                 .withPassword(utilisateurVo.getPassword())
-                .withPersonne(this.entityMapperPersonne.reverse(utilisateurVo.getPersonne()))
+                .withPersonne(Personne.Builder
+                        .newInstance()
+                        .withNom(utilisateurVo.getNom())
+                        .withPrenom(utilisateurVo.getPrenom())
+                        .build())
                 .withAdmin(false)
                 .build();
     }

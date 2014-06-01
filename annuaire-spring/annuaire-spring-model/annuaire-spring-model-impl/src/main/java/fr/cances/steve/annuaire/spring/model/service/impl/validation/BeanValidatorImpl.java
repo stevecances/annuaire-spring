@@ -1,20 +1,7 @@
 package fr.cances.steve.annuaire.spring.model.service.impl.validation;
 
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
-
-import com.google.common.base.Function;
 import com.google.common.base.Splitter;
 import com.google.common.collect.FluentIterable;
-
 import fr.cances.steve.annuaire.spring.model.service.api.exception.BeanValidationException;
 import fr.cances.steve.annuaire.spring.model.service.api.exception.vo.FieldErrorVo;
 import fr.cances.steve.annuaire.spring.model.service.api.exception.vo.ValidationErrorVo;
@@ -22,29 +9,51 @@ import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.AbstractVo
 import fr.cances.steve.annuaire.spring.model.service.impl.validation.vo.IVoValidation;
 import fr.cances.steve.annuaire.spring.support.logger.Logger;
 import fr.cances.steve.annuaire.spring.support.logger.LoggerFactory;
+import java.util.List;
+import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Steve Cancès
  * @version 1.0.0
+ * @param <V>
+ *            La classe du vo.
+ * @param <P>
+ *            La clase de l'identifiant du vo.
  * @since 1.0.0
  */
 @Component
 public class BeanValidatorImpl<V extends AbstractVo<P>, P> implements BeanValidator<V, P> {
 
-    /** Le nom de la property d'erreur de validation */
+    /**
+     * Le nom de la property d'erreur de validation
+     */
     private static final String VALIDATION_ERROR_MESSAGE_CODE = "validation.error";
 
-    /** Le message par default de l'erreur de validation */
+    /**
+     * Le message par default de l'erreur de validation
+     */
     private static final String VALIDATION_ERROR_DEFAULT_MESSAGE = "Some fields contain errors";
 
-    /** Logger */
+    /**
+     * Logger
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(BeanValidatorImpl.class);
 
-    /** Le message source pour acceder au properties */
+    /**
+     * Le message source pour acceder au properties
+     */
     @Inject
     private MessageSource messageSource;
 
-    /** Le validator de contraintes javax.validation */
+    /**
+     * Le validator de contraintes javax.validation
+     */
     @Inject
     private Validator validator;
 
@@ -84,20 +93,11 @@ public class BeanValidatorImpl<V extends AbstractVo<P>, P> implements BeanValida
 
         final List<FieldErrorVo> fieldErrorsVo = FluentIterable
                 .from(this.validator.validate(voValidation,
-                        groups))
-                .transform(new Function<ConstraintViolation<?>, FieldErrorVo>() {
-
-                    @Override
-                    public FieldErrorVo apply(
-                            final ConstraintViolation<?> constraintViolation) {
-
-                        return new FieldErrorVo(
+                                groups))
+                .transform((final ConstraintViolation<?> constraintViolation) -> new FieldErrorVo(
                                 getPropertyNameFromConstraintViolation(constraintViolation),
                                 getLocalizedMessageFromConstraintViolation(constraintViolation)
-                        );
-                    }
-
-                })
+                        ))
                 .toList();
 
         final ValidationErrorVo validationErrorVo = new ValidationErrorVo(msgValidationErrorVo, fieldErrorsVo);

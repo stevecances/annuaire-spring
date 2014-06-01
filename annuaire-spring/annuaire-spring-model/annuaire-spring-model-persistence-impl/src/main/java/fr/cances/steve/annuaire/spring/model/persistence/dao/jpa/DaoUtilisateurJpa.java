@@ -1,14 +1,9 @@
 package fr.cances.steve.annuaire.spring.model.persistence.dao.jpa;
 
-import java.util.Collection;
-
-import javax.persistence.TypedQuery;
-
-import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
-
 import fr.cances.steve.annuaire.spring.model.persistence.dao.DaoUtilisateur;
 import fr.cances.steve.annuaire.spring.model.persistence.entity.Utilisateur;
+import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
 
 /**
  * Repository JPA gérant l'entity {@link Utilisateur}.
@@ -34,12 +29,7 @@ public class DaoUtilisateurJpa extends AbstractDaoJpa<Utilisateur, Long> impleme
     public Utilisateur findByUsername(final String username) {
         TypedQuery<Utilisateur> query = this.entityManager.createQuery("From Utilisateur u where u.username =:username", this.domainClass);
         query.setParameter("username", username);
-        Collection<Utilisateur> utilisateurs = query.getResultList();
-        if (CollectionUtils.isEmpty(utilisateurs)) {
-            return null;
-        } else {
-            return utilisateurs.iterator().next();
-        }
+        return this.getSingleResultOrNull(query);
     }
 
 }

@@ -1,6 +1,5 @@
 package fr.cances.steve.annuaire.spring.support.mapper;
 
-import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import fr.cances.steve.annuaire.spring.support.logger.Logger;
@@ -67,13 +66,7 @@ public class Transformer<I, O> implements Mapper<I, O> {
      */
     public Collection<O> transform(final Collection<I> inputs) {
 
-        return Lists.newArrayList(FluentIterable.from(inputs).transform(new Function<I, O>() {
-
-            @Override
-            public O apply(final I input) {
-                return Transformer.this.mapper.transform(input);
-            }
-        }));
+        return Lists.newArrayList(FluentIterable.from(inputs).transform(Transformer.this::transform));
     }
 
     /**
@@ -90,7 +83,7 @@ public class Transformer<I, O> implements Mapper<I, O> {
      */
     public Collection<I> reverse(final Collection<O> outputs) {
 
-        return Lists.newArrayList(FluentIterable.from(outputs).transform(output -> reverse(output)));
+        return Lists.newArrayList(FluentIterable.from(outputs).transform(Transformer.this::reverse));
     }
 
     /**

@@ -1,10 +1,9 @@
 package fr.cances.steve.annuaire.spring.model.service.api;
 
-import java.util.Collection;
-
 import fr.cances.steve.annuaire.spring.model.service.api.exception.BeanValidationException;
 import fr.cances.steve.annuaire.spring.model.service.api.exception.ResourceNotFoundException;
 import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.AbstractVo;
+import java.util.Collection;
 
 /**
  * Definiftion d'un service avec les CRUD.
@@ -14,8 +13,10 @@ import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.AbstractVo
  * @since 1.0.0
  * @param <V>
  *            La classe du vo géré pas le service.
+ * @param <P>
+ *            La classe de l'identifiant du vo géré par le service.
  */
-public interface IService<V extends AbstractVo<P>, P> {
+public interface BasicService<V extends AbstractVo<P>, P> {
 
     /**
      * Retourne l'ensemble des elements.

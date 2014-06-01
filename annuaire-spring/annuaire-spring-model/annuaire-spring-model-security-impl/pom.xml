@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>annuaire-spring-model-security-impl</artifactId>
 	<name>annuaire-spring-model-security-impl</name>
-
+ 
 	<dependencies>
 		<!-- Model Persistence API -->
 		<dependency>

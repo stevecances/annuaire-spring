@@ -1,10 +1,9 @@
 package fr.cances.steve.annuaire.spring.model.persistence.config;
 
 import java.util.Properties;
-
 import javax.inject.Inject;
 import javax.sql.DataSource;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -44,11 +43,16 @@ public class PersitenceConfig {
     private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
     private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
     private static final String PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO = "hibernate.hbm2ddl.auto";
+    private static final String PROPERTY_NAME_HIBERNATE_IMPORT_FILES = "hibernate.hbm2ddl.import_files";
 
-    /** Package contenant les @Entity */
+    /**
+     * Package contenant les @Entity
+     */
     public static final String PACKAGES_TO_SCAN = "fr.cances.steve.annuaire.spring.model.persistence.entity";
 
-    /** Accès aux properties */
+    /**
+     * Accès aux properties
+     */
     @Inject
     private Environment env;
 
@@ -81,6 +85,10 @@ public class PersitenceConfig {
         properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
         properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
         properties.put(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_HBM2DDL_AUTO));
+        final String propertyImportFiles = this.env.getProperty(PROPERTY_NAME_HIBERNATE_IMPORT_FILES);
+        if (StringUtils.isNotBlank(propertyImportFiles)) {
+            properties.put(PROPERTY_NAME_HIBERNATE_IMPORT_FILES, propertyImportFiles);
+        }
         properties.put("hibernate.enable_lazy_load_no_trans", true);
         return properties;
     }

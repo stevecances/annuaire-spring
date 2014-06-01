@@ -10,7 +10,7 @@ import fr.cances.steve.annuaire.spring.model.service.api.valueobjects.Utilisateu
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface ServiceUtilisateur extends IService<UtilisateurVo, Long> {
+public interface ServiceUtilisateur extends BasicService<UtilisateurVo, Long> {
 
     /**
      * Modifie le statut d'administrateur de l'utilisateur.

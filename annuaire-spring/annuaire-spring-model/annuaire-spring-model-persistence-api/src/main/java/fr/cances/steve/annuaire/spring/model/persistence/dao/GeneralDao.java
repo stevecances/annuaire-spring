@@ -1,9 +1,8 @@
 package fr.cances.steve.annuaire.spring.model.persistence.dao;
 
+import fr.cances.steve.annuaire.spring.model.persistence.entity.IEntity;
 import java.util.Collection;
 import java.util.Map;
-
-import fr.cances.steve.annuaire.spring.model.persistence.entity.IEntity;
 
 /**
  * DAO proposant des méthodes utilisables sur l'ensemble des {@link IEntity}.
@@ -17,6 +16,8 @@ public interface GeneralDao {
      * Retourne l'ensemble des enregistrements qui contiennent les valeurs
      * recherchées
      * 
+     * @param <T>
+     *            La classe de l'entity recherché.
      * @param entityClass
      *            La classe de l'enity concernée
      * @param columnNamesValues

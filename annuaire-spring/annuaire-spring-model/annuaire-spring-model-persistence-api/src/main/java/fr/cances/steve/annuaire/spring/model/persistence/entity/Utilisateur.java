@@ -1,5 +1,6 @@
 package fr.cances.steve.annuaire.spring.model.persistence.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.CascadeType;
@@ -18,7 +19,7 @@ import javax.persistence.OneToOne;
  * @since 1.0.0
  */
 @Entity
-public class Utilisateur implements IEntity<Long> {
+public class Utilisateur extends AbstractEntity<Long> implements IEntity<Long>, Serializable {
 
     /**
      * L'identifiant technique.
@@ -47,28 +48,18 @@ public class Utilisateur implements IEntity<Long> {
 
     /**
      * Si l'utilisateur est administrateur.
+     * <p>
+     * Par defaut L'{@code Utilisateur} n'est pas administrateur.
+     * </p>
      */
     @Column(nullable = false)
-    private boolean admin;
+    private boolean admin = false;
 
     /**
      * La liste de contacts de l'utilisateur.
      */
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL, orphanRemoval = true)
     private final Collection<Personne> contacts = new ArrayList<>();
-
-    /**
-     * Constructeur par defaut.
-     * <p>
-     * Par defaut L'{@code Utilisateur} n'est pas administrateur.
-     * </p>
-     * 
-     * @author Steve Cancès
-     * @since 1.0.0
-     */
-    public Utilisateur() {
-        this.admin = false;
-    }
 
     /**
      * @return the id

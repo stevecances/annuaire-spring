@@ -1,5 +1,6 @@
 package fr.cances.steve.annuaire.spring.model.persistence.entity;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,18 +15,24 @@ import javax.persistence.ManyToOne;
  * @since 1.0.0
  */
 @Entity
-public class Telephone implements IEntity<Long> {
+public class Telephone extends AbstractEntity<Long> implements IEntity<Long>, Serializable {
 
-    /** L'identifiant technique. */
+    /**
+     * L'identifiant technique.
+     */
     @Id
     @GeneratedValue
     private Long id;
 
-    /** Le numéro de téléphone. */
+    /**
+     * Le numéro de téléphone.
+     */
     @Column(nullable = false)
     private String telephone;
 
-    /** La personne propriétaire du numéro de téléphone. */
+    /**
+     * La personne propriétaire du numéro de téléphone.
+     */
     @ManyToOne(optional = false)
     private Personne personne;
 
@@ -85,7 +92,9 @@ public class Telephone implements IEntity<Long> {
      */
     public static class Builder {
 
-        /** Le pojo géré par le {@code Builder} */
+        /**
+         * Le pojo géré par le {@code Builder}
+         */
         private final Telephone pojo;
 
         private Builder() {

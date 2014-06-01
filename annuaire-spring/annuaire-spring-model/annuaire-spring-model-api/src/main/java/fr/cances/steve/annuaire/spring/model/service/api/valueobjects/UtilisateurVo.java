@@ -9,17 +9,30 @@ package fr.cances.steve.annuaire.spring.model.service.api.valueobjects;
  */
 public class UtilisateurVo extends AbstractVo<Long> {
 
-    /** Le nom d'utilisateur de l'utilisateur. */
-    private String username;
+    /**
+     * Le nom d'utilisateur de l'utilisateur.
+     */
+    protected String username;
 
-    /** Le mot de passe de l'utilisateur. */
-    private String password;
+    /**
+     * Le mot de passe de l'utilisateur.
+     */
+    protected String password;
 
-    /** La personne associée à l'utilisateur. */
-    private PersonneVo personne;
+    /**
+     * Le nom de la personne.
+     */
+    protected String nom;
 
-    /** Si l'utilisateur est administrateur. */
-    private boolean admin;
+    /**
+     * le prenom de la personne.
+     */
+    protected String prenom;
+
+    /**
+     * Si l'utilisateur est administrateur.
+     */
+    protected boolean admin;
 
     /**
      * @return the username
@@ -52,18 +65,33 @@ public class UtilisateurVo extends AbstractVo<Long> {
     }
 
     /**
-     * @return the personne
+     * @return the nom
      */
-    public PersonneVo getPersonne() {
-        return personne;
+    public String getNom() {
+        return nom;
     }
 
     /**
-     * @param personne
-     *            the personne to set
+     * @param nom
+     *            the nom to set
      */
-    public void setPersonne(final PersonneVo personne) {
-        this.personne = personne;
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * @return the prenom
+     */
+    public String getPrenom() {
+        return prenom;
+    }
+
+    /**
+     * @param prenom
+     *            the prenom to set
+     */
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     /**
@@ -90,7 +118,9 @@ public class UtilisateurVo extends AbstractVo<Long> {
      */
     public static class Builder {
 
-        /** Le pojo géré par le {@code Builder} */
+        /**
+         * Le pojo géré par le {@code Builder}
+         */
         private final UtilisateurVo pojo;
 
         private Builder() {
@@ -147,12 +177,24 @@ public class UtilisateurVo extends AbstractVo<Long> {
         /**
          * @author Steve Cancès
          * @since 1.0.0
-         * @param personne
-         *            La personne.
+         * @param nom
+         *            Le nom.
          * @return Le {@code Builder} pour chainer les appels.
          */
-        public Builder withPersonne(final PersonneVo personne) {
-            this.pojo.personne = personne;
+        public Builder withNom(final String nom) {
+            this.pojo.nom = nom;
+            return this;
+        }
+
+        /**
+         * @author Steve Cancès
+         * @since 1.0.0
+         * @param prenom
+         *            Le prenom.
+         * @return Le {@code Builder} pour chainer les appels.
+         */
+        public Builder withPrenom(final String prenom) {
+            this.pojo.prenom = prenom;
             return this;
         }
 

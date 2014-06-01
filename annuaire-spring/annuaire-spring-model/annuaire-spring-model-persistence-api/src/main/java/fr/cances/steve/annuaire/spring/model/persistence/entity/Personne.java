@@ -1,8 +1,8 @@
 package fr.cances.steve.annuaire.spring.model.persistence.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,26 +20,36 @@ import javax.persistence.OneToMany;
  * @since 1.0.0
  */
 @Entity
-public class Personne implements IEntity<Long> {
+public class Personne extends AbstractEntity<Long> implements IEntity<Long>, Serializable {
 
-    /** L'identifiant technique. */
+    /**
+     * L'identifiant technique.
+     */
     @Id
     @GeneratedValue
     private Long id;
 
-    /** Le nom de la personne. */
+    /**
+     * Le nom de la personne.
+     */
     @Column(nullable = false)
     private String nom;
 
-    /** Le prénom de la personne. */
+    /**
+     * Le prénom de la personne.
+     */
     @Column(nullable = false)
     private String prenom;
 
-    /** Les numéros de téléphone de la personne. */
+    /**
+     * Les numéros de téléphone de la personne.
+     */
     @OneToMany(mappedBy = "personne", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Collection<Telephone> telephones = new ArrayList<>();
 
-    /** L'utilisateur associé au contact */
+    /**
+     * L'utilisateur associé au contact
+     */
     @ManyToOne
     private Utilisateur utilisateur;
 
@@ -114,7 +124,9 @@ public class Personne implements IEntity<Long> {
      */
     public static class Builder {
 
-        /** Le pojo géré par le {@code Builder} */
+        /**
+         * Le pojo géré par le {@code Builder}
+         */
         private final Personne pojo;
 
         private Builder() {

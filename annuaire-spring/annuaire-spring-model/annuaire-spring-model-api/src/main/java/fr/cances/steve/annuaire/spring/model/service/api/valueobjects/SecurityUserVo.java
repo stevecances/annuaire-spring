@@ -1,16 +1,24 @@
-package fr.cances.steve.annuaire.spring.model.security.entity;
+package fr.cances.steve.annuaire.spring.model.service.api.valueobjects;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Security user.
+ * Vo representant un utilisateur authentifie.
  * 
- * @author Steve Cancès
- * @version 1.0.0
- * @since 1.0.0
+ * @author Steve Cances <steve.cances@gmail.com>
  */
-public class SecurityUser {
+public class SecurityUserVo {
+
+    /**
+     * Le nom de la personne.
+     */
+    private String nom;
+
+    /**
+     * le prenom de la personne.
+     */
+    private String prenom;
 
     /**
      * Le nom d'utilisateur de l'utilisateur.
@@ -21,6 +29,36 @@ public class SecurityUser {
      * Les roles de l'utilisateur.
      */
     private final Collection<String> roles = new ArrayList<>();
+
+    /**
+     * @return the nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom
+     *            the nom to set
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * @return the prenom
+     */
+    public String getPrenom() {
+        return prenom;
+    }
+
+    /**
+     * @param prenom
+     *            the prenom to set
+     */
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
     /**
      * @return the username
@@ -45,7 +83,7 @@ public class SecurityUser {
     }
 
     /**
-     * Builder de {@link SecurityUser}.
+     * Builder de {@link SecurityUserVo}.
      * 
      * @author Steve Cancès
      * @version 1.0.0
@@ -56,17 +94,17 @@ public class SecurityUser {
         /**
          * Le pojo géré par le {@code Builder}
          */
-        private final SecurityUser pojo;
+        private final SecurityUserVo pojo;
 
         private Builder() {
-            this.pojo = new SecurityUser();
+            this.pojo = new SecurityUserVo();
         }
 
         /**
          * Retourne une instance du builder.
          * 
          * @author Steve Cancès
-         * @since 1.0.0
+         * @Since 1.0.0
          * @return Une instance du {@code Builder}.
          */
         public static Builder newInstance() {
@@ -76,6 +114,30 @@ public class SecurityUser {
         /**
          * @author Steve Cancès
          * @since 1.0.0
+         * @param nom
+         *            Le nom.
+         * @return Le {@code Builder} pour chainer les appels.
+         */
+        public Builder withNom(final String nom) {
+            this.pojo.nom = nom;
+            return this;
+        }
+
+        /**
+         * @author Steve Cancès
+         * @since 1.0.0
+         * @param prenom
+         *            Le prenom.
+         * @return Le {@code Builder} pour chainer les appels.
+         */
+        public Builder withPrenom(final String prenom) {
+            this.pojo.prenom = prenom;
+            return this;
+        }
+
+        /**
+         * @author Steve Cancès
+         * @Since 1.0.0
          * @param username
          *            Le username.
          * @return Le {@code Builder} pour chainer les appels.
@@ -110,13 +172,13 @@ public class SecurityUser {
         }
 
         /**
-         * Retourne l'objet {@code SecurityUser} construit.
+         * Retourne l'objet {@code SecurityUserVo} construit.
          * 
          * @author Steve Cancès
-         * @since 1.0.0
-         * @return Retourne l'objet {@code SecurityUser} construit.
+         * @Since 1.0.0
+         * @return Retourne l'objet {@code SecurityUserVo} construit.
          */
-        public SecurityUser build() {
+        public SecurityUserVo build() {
             return this.pojo;
         }
     }
